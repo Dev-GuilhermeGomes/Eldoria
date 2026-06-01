@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Natiles placeholder portrait">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="50%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#f5d884" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#f5d884" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <circle cx="400" cy="360" r="250" fill="url(#glow)"/>
+  <circle cx="400" cy="360" r="170" fill="#e5e7eb" opacity="0.16"/>
+  <path d="M250 775c28-132 102-200 150-200s122 68 150 200" fill="#e5e7eb" opacity="0.18"/>
+  <circle cx="400" cy="320" r="110" fill="#dbeafe" opacity="0.92"/>
+  <path d="M325 310c24-54 131-54 150 0-24 9-55 14-75 14s-51-5-75-14Z" fill="#1f2937" opacity="0.65"/>
+  <circle cx="360" cy="332" r="10" fill="#0f172a"/>
+  <circle cx="440" cy="332" r="10" fill="#0f172a"/>
+  <path d="M362 382c24 18 52 18 76 0" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round"/>
+  <rect x="250" y="755" width="300" height="40" rx="20" fill="#f5d884" opacity="0.9"/>
+  <text x="400" y="915" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="74" font-weight="700" fill="#f9fafb">Natiles</text>
+  <text x="400" y="968" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" letter-spacing="4" fill="#cbd5e1">APRRENDIZ TÁTICO</text>
+</svg>

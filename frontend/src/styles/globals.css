@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variáveis de cor minimalista */
+:root {
+  --color-yellow-light: #fef8f0;
+  --color-yellow-primary: #f5d884;
+  --color-yellow-dark: #e8c855;
+  --color-text-dark: #2c2c2c;
+  --color-text-light: #f5f5f5;
+  --color-bg-dark: #1a1a1a;
+  --color-bg-light: #ffffff;
+}
+
+/* Light mode */
+html {
+  --color-bg: var(--color-bg-light);
+  --color-text: var(--color-text-dark);
+  --color-yellow: var(--color-yellow-primary);
+  color-scheme: light;
+}
+
+/* Dark mode */
+html.dark {
+  --color-bg: var(--color-bg-dark);
+  --color-text: var(--color-text-light);
+  --color-yellow: var(--color-yellow-light);
+  color-scheme: dark;
+}
+
+body {
+  @apply font-serif bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300;
+}
+
+/* Classe útil para tipografia */
+.font-serif {
+  font-family: 'Georgia', 'Garamond', serif;
+}
+
+.btn-primary {
+  @apply px-4 py-2 bg-amber-200 dark:bg-amber-700 text-slate-900 dark:text-white rounded-lg font-semibold hover:bg-amber-300 dark:hover:bg-amber-600 transition;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 border-2 border-amber-200 dark:border-amber-700 text-amber-900 dark:text-amber-200 rounded-lg font-semibold hover:bg-amber-50 dark:hover:bg-slate-800 transition;
+}
+
+.card-base {
+  @apply bg-white dark:bg-slate-800 rounded-lg shadow-md dark:shadow-lg transition-colors;
+}
