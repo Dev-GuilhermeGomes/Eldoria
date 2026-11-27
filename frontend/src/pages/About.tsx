@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { api } from '../services/api';
 
 export const About: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -30,9 +31,14 @@ export const About: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setSubmitted(true);
-    resetForm();
-    setTimeout(() => setSubmitted(false), 5000);
+    try {
+      await api.sendContactMessage(formData);
+      setSubmitted(true);
+      resetForm();
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : 'Erro ao enviar a mensagem.');
+    }
   };
 
   return (
@@ -41,25 +47,23 @@ export const About: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Sobre Section */}
           <div className="card-base p-8">
-            <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white font-serif">Sobre ViperBook</h2>
+            <h2 className="text-3xl font-bold mb-6 text-slate-900 dark:text-white font-serif">Sobre Eldoria</h2>
             <div className="space-y-4 text-slate-700 dark:text-slate-300">
               <p>
-                ViperBook é uma plataforma dedicada aos amantes de livros. A missão é criar um espaço
-                minimalista e elegante onde leitores possam descobrir, explorar e aproveitar o mundo da leitura.
+                Eldoria é uma obra literária original criada por Guilherme Gomes. Este site reúne
+                a história, personagens e capítulos numa experiência digital pensada para a leitura.
               </p>
               <p>
-                Acreditamos que cada leitor merece uma experiência personalizada. Por isso, oferecemos:
+                A experiência de leitura inclui:
               </p>
               <ul className="list-disc list-inside space-y-2 pl-2">
-                <li>Catálogo curado de livros diversos</li>
-                <li>Interfaces intuitivas e responsivas</li>
-                <li>Comunidade de leitores apaixonados</li>
-                <li>Recomendações personalizadas</li>
-                <li>Informações detalhadas sobre personagens</li>
+                <li>Capítulos organizados pela ordem da história</li>
+                <li>Tema claro ou escuro</li>
+                <li>Controlos de tamanho e espaçamento do texto</li>
+                <li>Informações sobre as personagens</li>
               </ul>
               <p>
-                Junte-se a nós e explore um novo universo de leitura. Cada livro tem uma história. 
-                Qual é a sua?
+                Explore o universo de Eldoria e acompanhe a história capítulo a capítulo.
               </p>
             </div>
           </div>

@@ -1,77 +1,51 @@
-# ViperBook 📚
+# FalltoBook
 
-Um website minimalista de biblioteca de livros com design moderno e responsivo.
+Plataforma digital da saga literária original Eldoria, criada por Guilherme Gomes.
 
-## 🎨 Features
+## Funcionalidades
 
-- **Design Minimalista**: Tons de amarelo suave inspirados em lâmpadas de leitura
-- **Dark/Light Mode**: Escolha o tema que prefere
-- **Responsivo**: Compatível com mobile, tablet e desktop
-- **Catálogo de Livros**: Lista com pesquisa e ordenação
-- **Páginas Individuais**: Sinopse, autor, personagens e secção de leitura
-- **Contacto**: Formulário estático e informações sobre o projeto
+- 21 capítulos navegáveis
+- Leitura em desktop e mobile
+- Tema claro e escuro
+- Controles de tamanho e espaçamento do texto
+- Personagens, capas e navegação por capítulos
+- API Express preparada para MongoDB
+- Deploy estático suportado no Cloudflare Pages
 
-## 📦 Stack Tecnológico
+## Stack
 
-### Frontend
-- React 18 + TypeScript
+- React 18
+- TypeScript
+- Vite
 - Tailwind CSS
-- React Router para navegação
+- Express
+- MongoDB / Mongoose
+- JWT
 
-### Backend
-- Backend incluído como base para futuras funcionalidades, mas o site atual funciona em modo estático
+## Desenvolvimento
 
-## 🚀 Como Começar
-
-### Pré-requisitos
-- Node.js (v16+)
-- npm ou yarn
-
-### Instalação
-
-1. Clone o repositório
-```bash
-git clone https://github.com/seu-usuario/viperbook.git
-cd viperbook
-```
-
-2. Configure o Frontend
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 
-O site estará disponível em `http://localhost:3000`
+Em outro terminal:
 
-## 📁 Estrutura do Projeto
-
-```
-viperbook/
-├── frontend/                 # React app
-│   ├── src/
-│   │   ├── components/      # Componentes reutilizáveis
-│   │   ├── pages/           # Páginas principais
-│   │   ├── services/        # Serviços API
-│   │   ├── styles/          # Estilos globais
-│   │   └── App.tsx
-│   └── package.json
-├── backend/                  # Base backend para futuro uso
-├── .gitignore
-└── README.md
+```bash
+cd backend
+npm install
+npm run dev
 ```
 
-## 🔐 Variáveis de Ambiente
+## Deploy gratuito
 
-### Frontend (.env)
-```
-VITE_API_URL=http://localhost:5000
-```
+O frontend pode ser publicado no Cloudflare Pages com o diretório `frontend/dist`.
 
-## 📝 Licença
+O backend pode ser publicado num serviço Node gratuito e a base de dados pode usar MongoDB Atlas com o plano gratuito.
 
-MIT
+Antes do deploy, configure `MONGODB_URI`, `JWT_SECRET`, `PORT` e `VITE_API_URL`.
 
-## 👥 Autor
+## Autor
 
-Seu Nome / Time
+Guilherme Gomes

@@ -9,6 +9,7 @@ import { About } from './pages/About';
 import { ReaderPage } from './pages/ReaderPage';
 import { ChapterCoverPage } from './pages/ChapterCoverPage';
 import { CharactersPage } from './pages/CharactersPage';
+import { Admin } from './pages/Admin';
 import './styles/globals.css';
 
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
             <Route path="/read/:id/:chapterId" element={<ChapterCoverPage />} />
             <Route path="/read/:id/:chapterId/content" element={<ReaderPage />} />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

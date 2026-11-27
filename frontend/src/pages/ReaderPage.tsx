@@ -4,6 +4,7 @@ import { FiArrowLeft, FiChevronLeft, FiChevronRight, FiBook, FiSettings, FiList 
 import { getBookById, type Book } from '../data/books';
 import { eldoriaChapters, type Chapter } from '../data/eldoriaChapters';
 import { CharacterCard } from '../components/CharacterCard';
+import { api } from '../services/api';
 
 export const ReaderPage: React.FC = () => {
   const { id, chapterId } = useParams<{ id: string; chapterId?: string }>();
@@ -45,20 +46,22 @@ export const ReaderPage: React.FC = () => {
     let cancelled = false;
     setLoading(true);
 
-    fetch(`/chapters/${chapter.id}.txt`)
-      .then(res => {
-        if (!res.ok) throw new Error('fetch_failed');
-        return res.text();
-      })
-      .then(text => {
-        if (!cancelled) {
-          setChapterContent(text);
-        }
+    api.getChapter('eldoria', chapter.number)
+      .then(result => {
+        if (!cancelled) setChapterContent(result.chapter.content);
       })
       .catch(() => {
-        if (!cancelled) {
-          setChapterContent(chapter.content ?? null);
-        }
+        fetch(`/chapters/${chapter.id}.txt`)
+          .then(res => {
+            if (!res.ok) throw new Error('fetch_failed');
+            return res.text();
+          })
+          .then(text => {
+            if (!cancelled) setChapterContent(text);
+          })
+          .catch(() => {
+            if (!cancelled) setChapterContent(chapter.content ?? null);
+          })
       })
       .finally(() => {
         if (!cancelled) {

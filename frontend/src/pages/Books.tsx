@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { eldoriaChapters, type Chapter } from '../data/eldoriaChapters';
 import { FiSearch, FiHeart } from 'react-icons/fi';
 import { AiFillHeart } from 'react-icons/ai';
+import { api } from '../services/api';
 
 export const Books: React.FC = () => {
-  const [filteredChapters, setFilteredChapters] = useState<Chapter[]>(eldoriaChapters);
+  const [chapters, setChapters] = useState<Chapter[]>(eldoriaChapters);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('number');
   const [likedChapters, setLikedChapters] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    applyFilters(search, sort);
-  }, [sort]);
+  const filteredChapters = useMemo(() => {
+    let nextChapters = [...chapters];
 
-  const applyFilters = (searchValue: string, sortValue: string) => {
-    let nextChapters = [...eldoriaChapters];
-
-    if (sortValue === 'title') {
+    if (sort === 'title') {
       nextChapters.sort((a, b) => a.title.localeCompare(b.title));
     } else {
       nextChapters.sort((a, b) => a.number - b.number);
     }
 
-    if (searchValue.trim()) {
-      const searchTerm = searchValue.toLowerCase();
+    const searchTerm = search.trim().toLowerCase();
+    if (searchTerm) {
       nextChapters = nextChapters.filter(
         (chapter) =>
           chapter.title.toLowerCase().includes(searchTerm) ||
@@ -33,12 +30,39 @@ export const Books: React.FC = () => {
       );
     }
 
-    setFilteredChapters(nextChapters);
-  };
+    return nextChapters;
+  }, [chapters, search, sort]);
+
+  useEffect(() => {
+    api.getBooks()
+      .then(async result => {
+        const book = result.books?.find((item: { title: string }) => item.title === 'Eldoria');
+        if (!book?._id) return;
+        const remote = await api.getChapters(book.slug || book._id);
+        if (!remote.chapters?.length) return;
+        setChapters(remote.chapters.map((chapter: {
+          _id: string;
+          number: number;
+          title: string;
+          excerpt?: string;
+          image?: string;
+          publishedDate?: string;
+        }) => ({
+          id: `eldoria_cap${String(chapter.number).padStart(2, '0')}`,
+          number: chapter.number,
+          title: chapter.title,
+          excerpt: chapter.excerpt || '',
+          content: '',
+          image: chapter.image,
+          author: 'Guilherme Gomes',
+          publishedDate: chapter.publishedDate
+        })));
+      })
+      .catch(() => undefined);
+  }, []);
 
   const handleSearch = (value: string) => {
     setSearch(value);
-    applyFilters(value, sort);
   };
 
   const toggleLike = (chapterId: string, e: React.MouseEvent) => {
@@ -56,7 +80,7 @@ export const Books: React.FC = () => {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-12">
       <div className="max-w-6xl mx-auto px-6">
         <h1 className="text-4xl font-bold mb-8 text-slate-900 dark:text-white font-serif">
-          Biblioteca de Livros
+          Capítulos de Eldoria
         </h1>
 
         {/* Search and Sort */}
@@ -129,7 +153,9 @@ export const Books: React.FC = () => {
                       </p>
 
                       <div className="flex justify-between items-center mb-3 text-xs text-slate-500 dark:text-slate-400">
-                        <span>{chapter.publishedDate ? new Date(chapter.publishedDate).toLocaleDateString('pt-PT') : '2024-06-01'}</span>
+                        {chapter.publishedDate && (
+                          <span>{new Date(chapter.publishedDate).toLocaleDateString('pt-PT')}</span>
+                        )}
                         {chapter.characters && chapter.characters.length > 0 && (
                           <span className="flex items-center gap-1">
                             👥 {chapter.characters.length}

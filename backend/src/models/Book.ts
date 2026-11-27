@@ -33,6 +33,13 @@ const characterSchema = new mongoose.Schema({
 });
 
 const bookSchema = new mongoose.Schema({
+  slug: {
+    type: String,
+    unique: true,
+    sparse: true,
+    trim: true,
+    lowercase: true
+  },
   title: {
     type: String,
     required: true,

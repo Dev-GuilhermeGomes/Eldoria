@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Book from '../models/Book';
 import User from '../models/User';
 import { AuthenticatedParamsRequest } from '../middleware/auth';
+import mongoose from 'mongoose';
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
@@ -45,8 +46,9 @@ export const getBookById = async (req: AuthenticatedParamsRequest<{ id: string }
   try {
     const { id } = req.params;
     
-    const book = await Book.findByIdAndUpdate(
-      id,
+    const filter = mongoose.isValidObjectId(id) ? { _id: id } : { slug: id };
+    const book = await Book.findOneAndUpdate(
+      filter,
       { $inc: { views: 1 } },
       { new: true }
     );
@@ -55,7 +57,7 @@ export const getBookById = async (req: AuthenticatedParamsRequest<{ id: string }
       return res.status(404).json({ message: 'Livro não encontrado' });
     }
 
-    const authorBooks = await Book.find({ author: book.author, _id: { $ne: id } }).limit(5);
+    const authorBooks = await Book.find({ author: book.author, _id: { $ne: book._id } }).limit(5);
 
     res.json({
       book,

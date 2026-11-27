@@ -1,12 +1,13 @@
 {
-  "name": "viperbook-backend",
+  "name": "falltobook-backend",
   "version": "1.0.0",
-  "description": "Backend para ViperBook - Biblioteca de livros",
+  "description": "API do site literário FalltoBook",
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "seed": "ts-node src/scripts/seed.ts",
     "lint": "eslint src/**/*.ts"
   },
   "keywords": [
@@ -14,7 +15,7 @@
     "library",
     "api"
   ],
-  "author": "ViperBook Team",
+  "author": "Guilherme Gomes",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,7 +23,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongodb-memory-server": "^11.1.0",
     "mongoose": "^7.0.0",
     "multer": "^1.4.5-lts.1"
   },

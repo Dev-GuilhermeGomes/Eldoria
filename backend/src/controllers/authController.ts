@@ -34,7 +34,8 @@ export const register = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error: any) {
@@ -68,7 +69,8 @@ export const login = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role
       }
     });
   } catch (error: any) {
@@ -91,6 +93,7 @@ export const getUserProfile = async (req: AuthRequest, res: Response) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
       favoriteBooks: user.favoriteBooks,
       likedBooks: user.likedBooks,
       dislikedBooks: user.dislikedBooks

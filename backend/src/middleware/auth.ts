@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
 export interface AuthRequest extends Request {
   userId?: string;
@@ -25,6 +26,18 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
     next();
   } catch (error) {
     res.status(401).json({ message: 'Token inválido ou expirado' });
+  }
+};
+
+export const requireAdmin = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.userId).select('role');
+    if (!user || user.role !== 'admin') {
+      return res.status(403).json({ message: 'Acesso exclusivo para administradores' });
+    }
+    next();
+  } catch {
+    res.status(403).json({ message: 'Não foi possível validar o administrador' });
   }
 };
 

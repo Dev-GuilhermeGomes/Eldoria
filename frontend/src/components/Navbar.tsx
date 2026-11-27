@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMenu, FiX, FiMoon, FiSun } from 'react-icons/fi';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() =>
+    localStorage.getItem('falltobook-theme') === 'dark'
+  );
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('falltobook-theme', isDark ? 'dark' : 'light');
+  }, [isDark]);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleTheme = () => {
     setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
   };
 
   const handleNavClick = () => {
@@ -20,7 +26,7 @@ export const Navbar: React.FC = () => {
     { to: '/', label: 'Home' },
     { to: '/books', label: 'Livros' },
     { to: '/characters', label: 'Personagens' },
-    { to: '/about', label: 'Sobre e Contacto' },
+    { to: '/about', label: 'Sobre' },
   ];
 
   const linkClass = 'text-lg font-serif text-slate-700 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 transition';
@@ -30,7 +36,7 @@ export const Navbar: React.FC = () => {
       <header className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-amber-200 dark:border-amber-700 bg-white/95 dark:bg-slate-900/95 backdrop-blur">
         <div className="flex items-center justify-between px-4 py-3">
           <Link to="/" className="text-2xl font-bold text-amber-600 dark:text-amber-400 hover:text-amber-700 transition" onClick={handleNavClick}>
-            ViperBook
+            FalltoBook
           </Link>
           <div className="flex items-center gap-2">
             <button
@@ -66,7 +72,7 @@ export const Navbar: React.FC = () => {
       <nav className="hidden md:fixed md:left-0 md:top-0 md:flex md:h-screen md:w-64 md:flex-col md:justify-between md:border-r md:border-amber-200 md:bg-white md:px-6 md:py-8 md:shadow-lg dark:md:border-amber-700 dark:md:bg-slate-800 z-50 max-w-full">
         <div>
           <Link to="/" className="mb-12 block text-3xl font-bold text-amber-600 transition hover:text-amber-700 dark:text-amber-400" onClick={handleNavClick}>
-            📚 ViperBook
+            FalltoBook
           </Link>
 
           <ul className="space-y-6">

@@ -51,7 +51,7 @@ VITE_API_URL=http://localhost:5000
 ```
 
 Inicie o frontend:
-```bash
+```bash 
 npm run dev
 ```
 
